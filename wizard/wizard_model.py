@@ -13,11 +13,16 @@ _logger = logging.getLogger(__name__)
 class refund_add_invoice(models.TransientModel):
         _name = 'refund.add.invoice'
 
-        invoice_id = fields.Many2one('account.analytic.account')
-        amount = fields.Float(string='Monto')
+	lines = fields.One2many(comodel_name='refund.add.invoice.line',inverse_name='header_id')
 
         @api.multi
         def confirm_line(self):
                 import pdb;pdb.set_trace()
                 return None
 
+class refund_add_invoice_line(models.TransientModel):
+	_name = 'refund.add.invoice.line'
+
+	header_id = fields.Many2one('refund.add.invoice')
+        invoice_id = fields.Many2one('account.analytic.account')
+        amount = fields.Float(string='Monto')
