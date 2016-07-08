@@ -1,7 +1,7 @@
 <openerp>
 	<data>
 
-		<record id="cashbox_wizard_add_line" model="ir.ui.view">
+		<record id="refund_add_invoice" model="ir.ui.view">
 			<field name="name">Agregar facturas</field>
 			<field name="model">refund.add.invoice</field>
 			<field name="arch" type="xml">
