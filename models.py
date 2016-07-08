@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from openerp import models, api, fields, exceptions
 from openerp.exceptions import ValidationError
+from datetime import date
 
 class account_invoice(models.Model):
 	_inherit = "account.invoice"
@@ -10,6 +11,7 @@ class account_invoice(models.Model):
 		vals_header = {
 			'name': str(self.id) + ' - ' + str(date.today())
 			}
+		import pdb;pdb.set_trace()
 		wizard_id = self.env['refund.add.invoice'].create(vals_header)
 		invoices = self.env['account.invoice'].search([('partner_id','=',self.partner_id.id),\
 								('state','=','open')])
