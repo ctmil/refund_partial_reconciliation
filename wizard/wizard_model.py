@@ -15,6 +15,7 @@ class refund_add_invoice(models.TransientModel):
 
 	name = fields.Char(string='Name')
 	lines = fields.One2many(comodel_name='refund.add.invoice.line',inverse_name='header_id')
+	refund_id = fields.Many2one('account.invoice')
 
         @api.multi
         def confirm_line(self):
@@ -26,4 +27,6 @@ class refund_add_invoice_line(models.TransientModel):
 
 	header_id = fields.Many2one('refund.add.invoice')
         invoice_id = fields.Many2one('account.invoice')
+	date = fields.Date(string='Fecha')
+	original_amount = fields.Float('Monto Factura')
         amount = fields.Float(string='Monto')
