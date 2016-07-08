@@ -7,7 +7,7 @@
             <field name="model">account.invoice</field>
             <field name="inherit_id" ref="account.invoice_form"/>
             <field name="arch" type="xml">
-		<field name="status" position="before">a
+		<field name="state" position="before">a
 			<button name="invoice_partial_conciliation" type="object"
 				string="Conciliar NC" attrs="{'invisible': [('type','!=','out_refund'),('state','!=','open')]}" />
 		</field>
