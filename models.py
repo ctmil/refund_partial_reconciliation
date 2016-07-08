@@ -11,7 +11,6 @@ class account_invoice(models.Model):
 		vals_header = {
 			'name': str(self.id) + ' - ' + str(date.today())
 			}
-		import pdb;pdb.set_trace()
 		wizard_id = self.env['refund.add.invoice'].create(vals_header)
 		invoices = self.env['account.invoice'].search([('partner_id','=',self.partner_id.id),\
 								('state','=','open')])
