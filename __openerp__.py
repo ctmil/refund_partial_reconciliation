@@ -7,7 +7,7 @@
 	#'security/security.xml',
 	#'security/ir.model.access.csv',
 	#'portal_view.xml',
-	#'account_view.xml',
+	'account_view.xml',
     ],
     'demo': [
     ],
