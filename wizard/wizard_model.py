@@ -13,6 +13,7 @@ _logger = logging.getLogger(__name__)
 class refund_add_invoice(models.TransientModel):
         _name = 'refund.add.invoice'
 
+	name = fields.Char(string='Name')
 	lines = fields.One2many(comodel_name='refund.add.invoice.line',inverse_name='header_id')
 
         @api.multi
@@ -24,5 +25,5 @@ class refund_add_invoice_line(models.TransientModel):
 	_name = 'refund.add.invoice.line'
 
 	header_id = fields.Many2one('refund.add.invoice')
-        invoice_id = fields.Many2one('account.analytic.account')
+        invoice_id = fields.Many2one('account.invoice')
         amount = fields.Float(string='Monto')
