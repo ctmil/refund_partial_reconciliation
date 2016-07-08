@@ -5,9 +5,9 @@
 			<field name="name">Agregar facturas</field>
 			<field name="model">refund.add.invoice</field>
 			<field name="arch" type="xml">
-				<form string="Agregar facturas">
+				<form string="Asignar facturas">
 					<field name="lines">
-						<tree string="Facturas" create="false" editable="bottom">
+						<tree string="Facturas" create="false" delete="false" editable="bottom">
 							<field name="invoice_id" string="Factura" readonly="1"/>
 							<field name="amount" string="Monto"/>
 						</tree>
