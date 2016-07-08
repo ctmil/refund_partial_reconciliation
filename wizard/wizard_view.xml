@@ -6,10 +6,12 @@
 			<field name="model">refund.add.invoice</field>
 			<field name="arch" type="xml">
 				<form string="Agregar facturas">
-					<group>
-						<field name="invoice_id"/>
-						<field name="amount"/>
-					</group>
+					<field name="lines">
+						<tree string="Facturas">
+							<field name="invoice_id"/>
+							<field name="amount"/>
+						</tree>
+					</field>
 					<button name="confirm_line" type="object" string="OK" /> 
 				</form>
 			</field>
