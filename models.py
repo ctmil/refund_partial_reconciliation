@@ -3,9 +3,15 @@ from openerp import models, api, fields, exceptions
 from openerp.exceptions import ValidationError
 
 class account_invoice(models.Model):
-	_inherit = "sale.order"
+	_inherit = "account.invoice"
 
 	@api.one
 	def invoice_partial_conciliation(self):
-		import pdb;pdb.set_trace()
-		return {}
+                return {'type': 'ir.actions.act_window',
+                        'name': 'Agregar facturas a conciliacion',
+                        'res_model': 'refund.add.invoice',
+                        'view_type': 'form',
+                        'view_mode': 'form',
+                        'target': 'new',
+                        'nodestroy': True,
+                        }
