@@ -7,7 +7,7 @@
 			<field name="arch" type="xml">
 				<form string="Agregar facturas">
 					<field name="lines">
-						<tree string="Facturas" create="False">
+						<tree string="Facturas" create="false" editable="bottom">
 							<field name="invoice_id" string="Factura" readonly="1"/>
 							<field name="amount" string="Monto"/>
 						</tree>
