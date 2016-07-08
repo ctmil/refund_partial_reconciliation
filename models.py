@@ -5,7 +5,7 @@ from openerp.exceptions import ValidationError
 class account_invoice(models.Model):
 	_inherit = "account.invoice"
 
-	@api.one
+	@api.multi
 	def invoice_partial_conciliation(self):
                 return {'type': 'ir.actions.act_window',
                         'name': 'Agregar facturas a conciliacion',
