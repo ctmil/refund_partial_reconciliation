@@ -9,15 +9,20 @@ class account_invoice(models.Model):
 	@api.multi
 	def invoice_partial_conciliation(self):
 		vals_header = {
-			'name': str(self.id) + ' - ' + str(date.today())
+			'name': str(self.id) + ' - ' + str(date.today()),
+			'refund_id': self.id,
 			}
 		wizard_id = self.env['refund.add.invoice'].create(vals_header)
 		invoices = self.env['account.invoice'].search([('partner_id','=',self.partner_id.id),\
+								('type','=','out_invoice'),\
 								('state','=','open')])
 		for invoice in invoices:
 			vals_inv = {
 				'header_id': wizard_id.id,
 				'invoice_id': invoice.id,
+				'date': invoice.date_invoice,
+				'original_amount': invoice.amount_total,
+				'residual': invoice.residual,
 				'amount': 0,
 				}
 			line_inv = self.env['refund.add.invoice.line'].create(vals_inv)

@@ -29,4 +29,5 @@ class refund_add_invoice_line(models.TransientModel):
         invoice_id = fields.Many2one('account.invoice')
 	date = fields.Date(string='Fecha')
 	original_amount = fields.Float('Monto Factura')
+	residual = fields.Float('Saldo')
         amount = fields.Float(string='Monto')

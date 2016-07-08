@@ -11,6 +11,7 @@
 							<field name="invoice_id" string="Factura" readonly="1"/>
 							<field name="date" string="Fecha" readonly="1"/>
 							<field name="original_amount" string="Monto Original" readonly="1"/>
+							<field name="residual" string="Saldo" readonly="1"/>
 							<field name="amount" string="Monto"/>
 						</tree>
 					</field>
