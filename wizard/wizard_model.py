@@ -27,7 +27,6 @@ class refund_add_invoice(models.TransientModel):
 			'journal_id': self.journal_id.id,
 			'date': str(date.today()),
 			'company_id': 1,
-			'partner_id':
 			}
 		move_id = self.env['account.move'].create(vals_move)
 		if not move_id:
