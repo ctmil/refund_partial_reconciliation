@@ -74,7 +74,7 @@ class refund_add_invoice(models.TransientModel):
 		for record_ids in rec_ids:
 			#reconcile = self.env['account.move.line'].reconcile_partial(self.env.cr, self.env.uid, record_ids, \
 			#	type='auto', context=None, writeoff_acc_id=False, writeoff_period_id=False, writeoff_journal_id=False)
-			reconcile = self.env['account.move.line'].partial_reconcile(self.env.cr, self.env.uid,record_ids,'auto')
+			reconcile = self.env['account.move.line'].partial_reconcile(record_ids)
                 return None
 
 class refund_add_invoice_line(models.TransientModel):
