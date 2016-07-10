@@ -66,7 +66,7 @@ class refund_add_invoice(models.TransientModel):
 					'credit': line.amount
 					}
 				credit_move_id = self.env['account.move.line'].create(vals_credit)
-				rec_ids.append([line_line_id,credit_move_id.id])	
+				rec_ids.append([line_invoice_id,credit_move_id.id])	
 		if move_id and debit_move_id and credit_move_id:
 			move_id.post()
 		import pdb;pdb.set_trace()
