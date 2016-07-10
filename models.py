@@ -8,7 +8,7 @@ class account_invoice(models.Model):
 
 	@api.multi
 	def invoice_partial_conciliation(self):
-		journal_id = self.env['account.journal'].search(['code','=','MISC'])
+		journal_id = self.env['account.journal'].search([('code','=','MISC')])
 		if not journal_id:
 			 raise exceptions.ValidationError('Debe tener creado el journal con codigo MISC')
 		
