@@ -44,6 +44,7 @@ class refund_add_invoice(models.TransientModel):
 		for line in self.lines:
 			import pdb;pdb.set_trace()
 			vals_debit = {
+				'name': 'DEBIT - Partial refund conciliation' + str(move.id),
 				'move_id': move_id.id,
 				'partner_id': refund.partner_id.id,
 				'account_id': debit_account.id,
@@ -53,6 +54,7 @@ class refund_add_invoice(models.TransientModel):
 				}
 			debit_move_id = self.env['account.move.line'].create(vals_debit)
 			vals_credit = {
+				'name': 'CREDIT - Partial refund conciliation' + str(move.id),
 				'move_id': move_id.id,
 				'partner_id': refund.partner_id.id,
 				'account_id': debit_account.id,
