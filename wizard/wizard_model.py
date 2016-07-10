@@ -71,11 +71,10 @@ class refund_add_invoice(models.TransientModel):
 				rec_ids.append([invoice_line_id,credit_move_id.id])	
 		if move_id and debit_move_id and credit_move_id:
 			move_id.post()
-		import pdb;pdb.set_trace()
 		for record_ids in rec_ids:
 			#reconcile = self.env['account.move.line'].reconcile_partial(self.env.cr, self.env.uid, record_ids, \
 			#	type='auto', context=None, writeoff_acc_id=False, writeoff_period_id=False, writeoff_journal_id=False)
-			reconcile = self.env['account.move.line'].reconcile_partial(self.env.cr, self.env.uid,record_ids,'auto')
+			reconcile = self.env['account.move.line'].partial_reconcile(self.env.cr, self.env.uid,record_ids,'auto')
                 return None
 
 class refund_add_invoice_line(models.TransientModel):
