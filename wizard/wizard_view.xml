@@ -6,7 +6,9 @@
 			<field name="model">refund.add.invoice</field>
 			<field name="arch" type="xml">
 				<form string="Asignar facturas">
-					<field name="journal_id" />
+					<group>
+						<field name="journal_id" />
+					</group>
 					<field name="lines">
 						<tree string="Facturas" create="false" delete="false" editable="bottom">
 							<field name="invoice_id" string="Factura" readonly="1"/>
