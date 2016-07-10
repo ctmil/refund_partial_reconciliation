@@ -59,7 +59,10 @@ class refund_add_invoice(models.TransientModel):
 				'debit': 0,
 				'credit': line.amount
 				}
-			debit_credit_id = self.env['account.move.line'].create(vals_credit)
+			credit_move_id = self.env['account.move.line'].create(vals_credit)
+		if move_id and debit_move_id and credit_move_id:
+			move_id.post()
+		# reconcile = move_line_pool.reconcile_partial(cr, uid, rec_ids, writeoff_acc_id=voucher.writeoff_acc_id.id, writeoff_period_id=voucher.period_id.id, writeoff_journal_id=voucher.journal_id.id)
                 return None
 
 class refund_add_invoice_line(models.TransientModel):
