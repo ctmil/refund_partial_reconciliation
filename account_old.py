@@ -35,7 +35,7 @@ class account_move_line(osv.osv):
 
 	@api.v7
 	def partial_reconcile(self, cr, uid, ids, context=None):
-		reconcile = self.pool.get('account.move.line'.reconcile_partial(cr, uid, ids, type='auto', context=None,\
+		reconcile = self.pool.get('account.move.line').reconcile_partial(cr, uid, ids, type='auto', context=None,\
 			 writeoff_acc_id=False, writeoff_period_id=False, writeoff_journal_id=False)
 
 	        return None
