@@ -45,9 +45,11 @@ class refund_add_invoice(models.TransientModel):
 		for line in self.lines:
 			if line.amount > 0:	
 				invoice = line.invoice_id
-				for invoice_line in invoice.move_lines:
-					if invoice_line.debit > 0:
-						invoice_line_id = invoice_line.id
+				if invoice.move_id:
+					move = invoice.move_id
+					for invoice_line in move.line_id:
+						if invoice_line.debit > 0:
+							invoice_line_id = invoice_line.id
 				vals_debit = {
 					'name': 'DEBIT - Partial refund conciliation' + str(move_id.id),
 					'move_id': move_id.id,
@@ -70,7 +72,8 @@ class refund_add_invoice(models.TransientModel):
 		if move_id and debit_move_id and credit_move_id:
 			move_id.post()
 		import pdb;pdb.set_trace()
-		# reconcile = move_line_pool.reconcile_partial(cr, uid, rec_ids, writeoff_acc_id=voucher.writeoff_acc_id.id, writeoff_period_id=voucher.period_id.id, writeoff_journal_id=voucher.journal_id.id)
+		for record_ids in rec_ids:
+			reconcile = self.env['account.move.line'].reconcile_partial(record_ids, writeoff_acc_id=None, writeoff_period_id=None, writeoff_journal_id=None)
                 return None
 
 class refund_add_invoice_line(models.TransientModel):
