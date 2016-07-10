@@ -14,6 +14,7 @@ class refund_add_invoice(models.TransientModel):
         _name = 'refund.add.invoice'
 
 	name = fields.Char(string='Name')
+	journal_id = fields.Many2one('account.journal',string='Diario',domain=[('type','=','general')])
 	lines = fields.One2many(comodel_name='refund.add.invoice.line',inverse_name='header_id')
 	refund_id = fields.Many2one('account.invoice')
 
