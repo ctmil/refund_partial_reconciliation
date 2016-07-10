@@ -42,7 +42,6 @@ class refund_add_invoice(models.TransientModel):
 		if not move_id:
                         raise exceptions.ValidationError('No pudo crearse la cabecera del asiento contable')
 		for line in self.lines:
-			import pdb;pdb.set_trace()
 			vals_debit = {
 				'name': 'DEBIT - Partial refund conciliation' + str(move_id.id),
 				'move_id': move_id.id,
@@ -56,11 +55,11 @@ class refund_add_invoice(models.TransientModel):
 				'name': 'CREDIT - Partial refund conciliation' + str(move_id.id),
 				'move_id': move_id.id,
 				'partner_id': refund.partner_id.id,
-				'account_id': debit_account.id,
+				'account_id': credit_account.id,
 				'debit': 0,
 				'credit': line.amount
 				}
-			debit_credit_id = self.env['account.move.line'].create(vals_debit)
+			debit_credit_id = self.env['account.move.line'].create(vals_credit)
                 return None
 
 class refund_add_invoice_line(models.TransientModel):
