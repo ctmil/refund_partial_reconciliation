@@ -22,14 +22,19 @@ class refund_add_invoice(models.TransientModel):
 
         @api.multi
         def confirm_line(self):
+		total_amount  = 0
+		for line in self.lines:
+			total_amount += line.amount
 		context = self.env.context
 		refund = self.env['account.invoice'].browse(context['active_id'])
+		if total_amount != self.amount_total:
+                        raise exceptions.ValidationError('No coinciden los totales con el total de la nota de credito')
 		credit_account = refund.partner_id.property_account_receivable
 		if refund.invoice_line:
 			line = refund.invoice_line[0]
 			debit_account = line.account_id
 		else:
-                        raise exceptions.ValidationError('No pued determinar cuenta contable')
+                        raise exceptions.ValidationError('No puede determinar cuenta contable')
 		if not refund:
                         raise exceptions.ValidationError('No hay NC disponible')
 		vals_move = {
