@@ -57,7 +57,7 @@ class refund_add_invoice(models.TransientModel):
 						if invoice_line.debit > 0:
 							invoice_line_id = invoice_line.id
 				vals_debit = {
-					'name': 'DEBIT - Partial refund conciliation' + str(move_id.id),
+					'name': refund.name,
 					'move_id': move_id.id,
 					'partner_id': refund.partner_id.id,
 					'account_id': debit_account.id,
