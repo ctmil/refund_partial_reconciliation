@@ -7,6 +7,7 @@ import openerp.addons.decimal_precision as dp
 from datetime import date
 import logging
 import ast
+from openerp import exceptions
 from openerp.exceptions import ValidationError
 
 #Get the logger
@@ -28,7 +29,7 @@ class refund_add_invoice(models.TransientModel):
 		context = self.env.context
 		refund = self.env['account.invoice'].browse(context['active_id'])
 		if total_amount != refund.amount_total:
-                        raise exceptions.ValidationError('No coinciden los totales con el total de la nota de credito')
+			raise exceptions.ValidationError('No coinciden los totales con el total de la nota de credito')
 		credit_account = refund.partner_id.property_account_receivable
 		if refund.invoice_line:
 			line = refund.invoice_line[0]
