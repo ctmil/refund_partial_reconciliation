@@ -28,7 +28,7 @@ class refund_add_invoice(models.TransientModel):
 			total_amount += line.amount
 		context = self.env.context
 		refund = self.env['account.invoice'].browse(context['active_id'])
-		if total_amount != refund.amount_total:
+		if total_amount > refund.amount_total:
 			raise exceptions.ValidationError('No coinciden los totales con el total de la nota de credito')
 		credit_account = refund.partner_id.property_account_receivable
 		if refund.invoice_line:
