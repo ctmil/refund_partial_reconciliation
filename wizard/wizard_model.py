@@ -60,7 +60,7 @@ class refund_add_invoice(models.TransientModel):
 					'name': refund.name or refund.internal_number,
 					'move_id': move_id.id,
 					'partner_id': refund.partner_id.id,
-					'account_id': debit_account.id,
+					'account_id': credit_account.id,
 					'debit': line.amount,
 					'credit': 0
 					}
