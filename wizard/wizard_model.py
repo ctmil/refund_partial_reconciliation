@@ -34,7 +34,7 @@ class refund_add_invoice(models.TransientModel):
 		refund_move_ids = []
 		if refund.move_id:
 			for move_line in refund.move_id.line_id:
-				if move_line.debit > 0:
+				if move_line.credit > 0:
 					refund_move_id = move_line.id
 
 		credit_account = refund.partner_id.property_account_receivable
