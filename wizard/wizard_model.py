@@ -58,6 +58,7 @@ class refund_add_invoice(models.TransientModel):
 							invoice_line_id = invoice_line.id
 				vals_debit = {
 					'name': refund.number or refund.internal_number,
+					'ref': 'NC ' + refund.name,
 					'move_id': move_id.id,
 					'partner_id': refund.partner_id.id,
 					'account_id': credit_account.id,
@@ -67,6 +68,7 @@ class refund_add_invoice(models.TransientModel):
 				debit_move_id = self.env['account.move.line'].create(vals_debit)
 				vals_credit = {
 					'name': refund.number or refund.internal_number,
+					'ref': 'NC ' + refund.name,
 					'move_id': move_id.id,
 					'partner_id': refund.partner_id.id,
 					'account_id': credit_account.id,
