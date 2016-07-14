@@ -84,7 +84,7 @@ class refund_add_invoice(models.TransientModel):
 					}
 				credit_move_id = self.env['account.move.line'].create(vals_credit)
 				rec_ids.append([invoice_line_id,credit_move_id.id])	
-				refund_move_ids.append([refund_line_id,debit_move_id.id])
+				refund_move_ids.append([refund_move_id,debit_move_id.id])
 		if move_id and debit_move_id and credit_move_id:
 			move_id.post()
 		for record_ids in rec_ids:
