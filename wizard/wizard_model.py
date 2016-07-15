@@ -25,6 +25,8 @@ class refund_add_invoice(models.TransientModel):
         def confirm_line(self):
 		total_amount  = 0
 		for line in self.lines:
+			if line.amount > line.residual:
+				raise exceptions.ValidationError('Monto asignado supera saldo de la factura')
 			total_amount += line.amount
 		context = self.env.context
 		refund = self.env['account.invoice'].browse(context['active_id'])
