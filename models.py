@@ -22,15 +22,16 @@ class account_invoice(models.Model):
 								('type','=','out_invoice'),\
 								('state','=','open')])
 		for invoice in invoices:
-			vals_inv = {
-				'header_id': wizard_id.id,
-				'invoice_id': invoice.id,
-				'date': invoice.date_invoice,
-				'original_amount': invoice.amount_total,
-				'residual': invoice.residual,
-				'amount': 0,
-				}
-			line_inv = self.env['refund.add.invoice.line'].create(vals_inv)
+			if invoice.residual > 0:
+				vals_inv = {
+					'header_id': wizard_id.id,
+					'invoice_id': invoice.id,
+					'date': invoice.date_invoice,
+					'original_amount': invoice.amount_total,
+					'residual': invoice.residual,
+					'amount': 0,
+					}
+				line_inv = self.env['refund.add.invoice.line'].create(vals_inv)
 		
                 return {'type': 'ir.actions.act_window',
                         'name': 'Agregar facturas a conciliacion',
