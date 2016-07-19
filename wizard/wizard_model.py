@@ -30,7 +30,7 @@ class refund_add_invoice(models.TransientModel):
 			total_amount += line.amount
 		context = self.env.context
 		refund = self.env['account.invoice'].browse(context['active_id'])
-		if total_amount > refund.amount_total:
+		if total_amount > refund.residual:
 			raise exceptions.ValidationError('No coinciden los totales con el total de la nota de credito')
 	
 		refund_move_ids = []
