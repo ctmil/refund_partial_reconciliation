@@ -15,7 +15,8 @@ class account_invoice(models.Model):
 		vals_header = {
 			'name': str(self.id) + ' - ' + str(date.today()),
 			'refund_id': self.id,
-			'journal_id': journal_id.id
+			'journal_id': journal_id.id,
+			'amount': self.amount_total,
 			}
 		wizard_id = self.env['refund.add.invoice'].create(vals_header)
 		invoices = self.env['account.invoice'].search([('partner_id','=',self.partner_id.id),\

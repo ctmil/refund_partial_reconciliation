@@ -8,6 +8,7 @@
 				<form string="Asignar facturas">
 					<group>
 						<field name="journal_id" />
+						<field name="amount" readonly="1" />
 					</group>
 					<field name="lines">
 						<tree string="Facturas" create="false" delete="false" editable="bottom">

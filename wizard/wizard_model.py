@@ -20,6 +20,7 @@ class refund_add_invoice(models.TransientModel):
 	journal_id = fields.Many2one('account.journal',string='Diario',domain=[('type','=','general')],required=True)
 	lines = fields.One2many(comodel_name='refund.add.invoice.line',inverse_name='header_id')
 	refund_id = fields.Many2one('account.invoice')
+	amount = fields.Float(string='Monto')
 
         @api.multi
         def confirm_line(self):
