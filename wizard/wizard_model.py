@@ -67,7 +67,7 @@ class refund_add_invoice(models.TransientModel):
 							invoice_line_id = invoice_line.id
 				vals_debit = {
 					'name': 'FAC ' + invoice.internal_number,
-					'ref': 'NC ' + refund.name,
+					'ref': 'NC ' + refund.internal_number,
 					'move_id': move_id.id,
 					'partner_id': refund.partner_id.id,
 					'account_id': credit_account.id,
