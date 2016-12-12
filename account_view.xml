@@ -9,7 +9,21 @@
             <field name="arch" type="xml">
 		<field name="state" position="before">
 			<button name="invoice_partial_conciliation" type="object"
-				string="Conciliar NC" attrs="{'invisible': ['|',('type','not in',['out_refund','in_refund']),('state','!=','open')]}" />
+				string="Conciliar NC" 
+				attrs="{'invisible': ['|',('type','!=',['out_refund']),('state','!=','open')]}"  />
+		</field>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="account_invoice_supplier_form_refund">
+            <field name="name">account.invoice.supplier.form.refund</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_supplier_form"/>
+            <field name="arch" type="xml">
+		<field name="state" position="before">
+			<button name="invoice_partial_conciliation" type="object"
+				string="Conciliar NC" 
+				attrs="{'invisible': ['|',('type','!=',['in_refund']),('state','!=','open')]}"  />
 		</field>
             </field>
         </record>
