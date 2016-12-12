@@ -16,6 +16,7 @@ _logger = logging.getLogger(__name__)
 class refund_add_invoice(models.TransientModel):
         _name = 'refund.add.invoice'
 
+	inv_type = fields.Char(string='Type')
 	name = fields.Char(string='Name')
 	journal_id = fields.Many2one('account.journal',string='Diario',domain=[('type','=','general')],required=True)
 	lines = fields.One2many(comodel_name='refund.add.invoice.line',inverse_name='header_id')
@@ -37,13 +38,23 @@ class refund_add_invoice(models.TransientModel):
 		refund_move_ids = []
 		if refund.move_id:
 			for move_line in refund.move_id.line_id:
-				if move_line.credit > 0:
-					refund_move_id = move_line.id
+				if self.inv_type == 'out_invoice':
+					if move_line.credit > 0:
+						refund_move_id = move_line.id
+				else:
+					if move_line.debit > 0:
+						refund_move_id = move_line.id
 
-		credit_account = refund.partner_id.property_account_receivable
+		if self.inv_type == 'out_invoice':
+			credit_account = refund.partner_id.property_account_receivable
+		else:
+			debit_account = refund.partner_id.property_account_payable
 		if refund.invoice_line:
 			line = refund.invoice_line[0]
-			debit_account = line.account_id
+			if self.inv_type == 'out_invoice':
+				debit_account = line.account_id
+			else:
+				credit_account = line.account_id
 		else:
                         raise exceptions.ValidationError('No puede determinar cuenta contable')
 		if not refund:
@@ -64,27 +75,53 @@ class refund_add_invoice(models.TransientModel):
 				if invoice.move_id:
 					move = invoice.move_id
 					for invoice_line in move.line_id:
-						if invoice_line.debit > 0:
-							invoice_line_id = invoice_line.id
-				vals_debit = {
-					'name': 'FAC ' + invoice.internal_number,
-					'ref': 'NC ' + refund.internal_number,
-					'move_id': move_id.id,
-					'partner_id': refund.partner_id.id,
-					'account_id': credit_account.id,
-					'debit': line.amount,
-					'credit': 0
-					}
+						if self.inv_type == 'out_invoice':
+							if invoice_line.debit > 0:
+								invoice_line_id = invoice_line.id
+						else:
+							if invoice_line.credit > 0:
+								invoice_line_id = invoice_line.id
+				if self.inv_type == 'out_invoice':
+					vals_debit = {
+						'name': 'FAC ' + invoice.internal_number,
+						'ref': 'NC ' + refund.internal_number,
+						'move_id': move_id.id,
+						'partner_id': refund.partner_id.id,
+						'account_id': credit_account.id,
+						'debit': line.amount,
+						'credit': 0
+						}
+				else:
+					vals_debit = {
+						'name': 'FAC ' + invoice.internal_number,
+						'ref': 'NC ' + refund.internal_number,
+						'move_id': move_id.id,
+						'partner_id': refund.partner_id.id,
+						'account_id': debit_account.id,
+						'credit': line.amount,
+						'debit': 0
+						}
 				debit_move_id = self.env['account.move.line'].create(vals_debit)
-				vals_credit = {
-					'name': 'NC ' + refund.number or refund.internal_number,
-					'ref': 'NC' ,
-					'move_id': move_id.id,
-					'partner_id': refund.partner_id.id,
-					'account_id': credit_account.id,
-					'debit': 0,
-					'credit': line.amount
-					}
+				if self.inv_type == 'out_invoice':
+					vals_credit = {
+						'name': 'NC ' + refund.number or refund.internal_number,
+						'ref': 'NC' ,
+						'move_id': move_id.id,
+						'partner_id': refund.partner_id.id,
+						'account_id': credit_account.id,
+						'debit': 0,
+						'credit': line.amount
+						}
+				else:
+					vals_credit = {
+						'name': 'NC ' + refund.number or refund.internal_number,
+						'ref': 'NC' ,
+						'move_id': move_id.id,
+						'partner_id': refund.partner_id.id,
+						'account_id': debit_account.id,
+						'credit': 0,
+						'debit': line.amount
+						}
 				credit_move_id = self.env['account.move.line'].create(vals_credit)
 				rec_ids.append([invoice_line_id,credit_move_id.id])	
 				refund_move_ids.append([refund_move_id,debit_move_id.id])

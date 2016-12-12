@@ -19,12 +19,18 @@ class account_invoice(models.Model):
 			'amount': self.residual,
 			}
 		wizard_id = self.env['refund.add.invoice'].create(vals_header)
-		invoices = self.env['account.invoice'].search([('partner_id','=',self.partner_id.id),\
-								('type','=','out_invoice'),\
-								('state','=','open')])
+		if self.type == 'out_refund':
+			invoices = self.env['account.invoice'].search([('partner_id','=',self.partner_id.id),\
+									('type','=','out_invoice'),\
+									('state','=','open')])
+		else:
+			invoices = self.env['account.invoice'].search([('partner_id','=',self.partner_id.id),\
+									('type','=','in_invoice'),\
+									('state','=','open')])
 		for invoice in invoices:
 			if invoice.residual > 0:
 				vals_inv = {
+					'inv_type': invoice.type,
 					'header_id': wizard_id.id,
 					'invoice_id': invoice.id,
 					'date': invoice.date_invoice,
