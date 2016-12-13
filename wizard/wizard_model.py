@@ -141,6 +141,7 @@ class refund_add_invoice_line(models.TransientModel):
 
 	header_id = fields.Many2one('refund.add.invoice')
         invoice_id = fields.Many2one('account.invoice')
+        supplier_invoice_number = fields.Char(string='Nro Factura Proveedor',related='invoice_id.supplier_invoice_number')
 	date = fields.Date(string='Fecha')
 	original_amount = fields.Float('Monto Factura')
 	residual = fields.Float('Saldo')

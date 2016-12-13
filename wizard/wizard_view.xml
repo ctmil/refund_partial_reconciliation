@@ -13,6 +13,7 @@
 					<field name="lines">
 						<tree string="Facturas" create="false" delete="false" editable="bottom">
 							<field name="invoice_id" string="Factura" readonly="1"/>
+							<field name="supplier_invoice_number" string="Nro Factura Proveedor" readonly="1"/>
 							<field name="date" string="Fecha" readonly="1"/>
 							<field name="original_amount" string="Monto Original" readonly="1"/>
 							<field name="residual" string="Saldo" readonly="1"/>
