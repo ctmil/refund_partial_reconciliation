@@ -10,7 +10,7 @@
 		<field name="state" position="before">
 			<button name="invoice_partial_conciliation" type="object"
 				string="Conciliar NC" 
-				attrs="{'invisible': ['|',('type','!=',['out_refund']),('state','!=','open')]}"  />
+				attrs="{'invisible': ['|',('type','!=','out_refund'),('state','!=','open')]}"  />
 		</field>
             </field>
         </record>
@@ -23,7 +23,7 @@
 		<field name="state" position="before">
 			<button name="invoice_partial_conciliation" type="object"
 				string="Conciliar NC" 
-				attrs="{'invisible': ['|',('type','!=',['in_refund']),('state','!=','open')]}"  />
+				attrs="{'invisible': ['|',('type','!=','in_refund'),('state','!=','open')]}"  />
 		</field>
             </field>
         </record>
