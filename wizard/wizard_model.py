@@ -114,7 +114,7 @@ class refund_add_invoice(models.TransientModel):
 						}
 				else:
 					vals_credit = {
-						'name': 'NC ' + refund.number or refund.supplier_invoice_number,
+						'name': 'NC ' + refund.supplier_invoice_number or refund.number,
 						'ref': 'NC' ,
 						'move_id': move_id.id,
 						'partner_id': refund.partner_id.id,
